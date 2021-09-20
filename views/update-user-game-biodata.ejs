@@ -1,0 +1,92 @@
+<%- include('layouts/header') %> 
+
+<%- include('layouts/nav') %> 
+
+<section class="container-fluid">
+    <div class="row">
+        <div class="col-3">
+            <!-- sidebar -->
+            <%- include('layouts/side-bar') %> 
+            <!-- end sidebar -->
+        </div>
+        <div class="col-9">
+            <div class="container mt-3">
+                <div class="row"></div>
+                    <h2>form create user Biodata</h2>
+            
+                    <% if (typeof errors != 'undefined') { %>
+                        <div class="alert alert-danger" role="alert">
+                            <ul>
+                                <% errors.forEach(error => { %>
+                                    <li><%= error.msg %> </li>
+                                <% }) %>
+                            </ul>
+                        </div>
+                    <% } %>
+                    <form method="post" enctype="multipart/form-data" action="/user-game/biodata/<%= user.user_game_id %>?_method=PUT">
+                        <div class="col-md-5 d-inline-block">
+                            <div class="mb-md-2">
+                                <label for="firstName" class="form-label">first Name</label>
+                                <input type="text" class="form-control" id="firstName" name="firstName" value="<%= user.first_name %>" required>
+                            </div>
+                            <div class="mb-md-2">
+                                <label for="lastName" class="form-label">last Name</label>
+                                <input type="text" class="form-control" id="lastName" name="lastName" value="<%= user.last_name %>" required>
+                            </div>
+                            <div class="mb-md-2">
+                                <label for="dateOfBirth" class="form-label">date Of Birth</label>
+                                <input type="datetime" class="form-control" id="dateOfBirth" name="dateOfBirth" value="<%= user.date_of_birth %>" required>
+                            </div>
+                            <div class="mb-md-2">
+                                <label for="age" class="form-label">Age</label>
+                                <input type="text" class="form-control" id="age" name="age" value="<%= user.age %>" required>
+                            </div>
+                            <div class="mb-md-2">
+                                <label for="noHp" class="form-label">No Handphone</label>
+                                <input type="text" class="form-control" id="noHp" name="noHp" value="<%= user.no_hp %>" required>
+                            </div>
+                        </div>
+                        <div class="col-md-5 offset-1 d-inline-block" >
+                            <div class="mb-md-2">
+                                <label for="country" class="form-label">Country</label>
+                                <input type="text" class="form-control" id="country" name="country" value="<%= user.country %>" required>
+                            </div>
+                            <div class="mb-md-2">
+                                <label for="image" class="form-label">Image</label>
+                                <input type="file" class="form-control" id="image" name="image" value="<%= user.image %>" required>
+                            </div>
+                            <div class="mb-md-2">
+                                <label for="education" class="form-label">Education</label>
+                                <input type="text" class="form-control" id="education" name="education" value="<%= user.education %>" required>
+                            </div>
+                            <div class="mb-md-2">
+                                <label for="profession" class="form-label">Profession</label>
+                                <input type="text" class="form-control" id="profession" name="profession" value="<%= user.profession %>" required>
+                            </div>
+                            <div class="mb-md-2">
+                                <label for="bio" class="form-label">Bio</label>
+                                <input type="text" class="form-control" id="bio" name="bio" value="<%= user.bio %>" required>
+                            </div>
+                            <div class="mb-3">
+                                <input type="hidden" class="form-control" id="userGameId" name="userGameId" value="<%= user.user_game_id%>" required>
+                            </div>
+                            <!-- <div class="form-group mb-md-3">
+                                <label for="userGameId">User Game Id</label>
+                                <select class="form-control" id="userGameId">
+                                    <option>-</option>
+                                    <% for( let i = 0; i < user.length; i++ ) { %>
+                                        <option onmouseover="bigImg(this)"><%= user[i].id %> <p></p></option>
+                                    <% } %>
+                                </select>
+                            </div> -->
+                        </div>
+                        <button type="submit" class="btn btn-primary test">Update</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<%- include('layouts/footer') %> 

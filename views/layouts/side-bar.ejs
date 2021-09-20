@@ -1,0 +1,66 @@
+<div class="d-flex flex-column flex-shrink-0 p-3 text-secondary p-3 mb-5 bg-body shadow shadow-sm" style="width: 280px; height: 100vh;">
+    <ul class="nav nav-pills flex-column">
+        <li>
+            <button class="btn d-inline-flex align-items-center text-dark toggle-panah" data-bs-toggle="collapse" data-bs-target="#website-collapse" aria-controls="website-collapse" aria-expanded="true" onclick="website()"> 
+                <i class="bi bi-chevron-down me-2 website"></i> Website </button>
+            <div class="collapse show" id="website-collapse">
+                <ul class="nav nav-pills flex-column mt-3 side-bar">
+                    <li class="nav-item side-bar-items">
+                        <a href="/user-game" class="nav-link text-secondary">
+                            <svg class="bi me-2" width="16" height="16"><use xlink:href="#home"></use></svg>
+                            User
+                        </a>
+                    </li>
+                    <li class="side-bar-items">
+                        <a href="#" class="nav-link text-secondary">
+                            <svg class="bi me-2" width="16" height="16"><use xlink:href="#grid"></use></svg>
+                            Menu
+                        </a>
+                    </li>
+                    <li class="side-bar-items">
+                        <a href="#" class="nav-link text-secondary">
+                            <svg class="bi me-2" width="16" height="16"><use xlink:href="#people-circle"></use></svg>
+                            Settings Website
+                        </a>
+                    </li>
+                    <li class="side-bar-items">
+                        <a href="#" class="nav-link text-secondary">
+                            <svg class="bi me-2" width="16" height="16"><use xlink:href="#people-circle"></use></svg>
+                            Layout Setting
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </li>
+    </ul>
+    <ul class="nav nav-pills flex-column">
+        <li>
+            <button class="btn d-inline-flex align-items-center text-dark toggle-panah" data-bs-toggle="collapse" data-bs-target="#table-collapse" aria-expanded="true" onclick="crud()">
+                <i class="bi bi-chevron-down me-2 forms"></i>Forms - CRUD
+            </button>
+            <div class="collapse show" id="table-collapse">
+                <ul class="list-unstyled fw-normal pb-1 small ms-4 side-bar">
+                    <li class="side-bar-items"><a href="/user-game/create" class="d-inline-flex align-items-center nav-link text-secondary">Input Data User</a></li>
+                    <li class="side-bar-items"><a href="#" class="d-inline-flex align-items-center nav-link text-secondary">Input Data User Game</a></li>
+                    <li class="side-bar-items"><a href="#" class="d-inline-flex align-items-center nav-link text-secondary">Input Data User Game</a></li>
+                </ul>
+            </div>
+        </li>
+    </ul>
+    <ul class="nav nav-pills flex-column">
+        <li>
+            <button class="btn d-inline-flex align-items-center text-dark toggle-panah" data-bs-toggle="collapse" data-bs-target="#form-collapse" aria-expanded="true" onclick="tables()">
+                <i class="bi bi-chevron-down me-2 tables"></i>Data Tables
+            </button>
+            <div class="collapse show" id="form-collapse">
+                <ul class="list-unstyled fw-normal pb-1 small ms-4 side-bar">
+                    <li class="side-bar-items"><a href="#" class="d-inline-flex align-items-center nav-link text-secondary">Data Table Game</a></li>
+                    <li class="side-bar-items"><a href="#" class="d-inline-flex align-items-center nav-link text-secondary">Data Table Game Biodata</a></li>
+                    <li class="side-bar-items"><a href="#" class="d-inline-flex align-items-center nav-link text-secondary">Data Table Game History</a></li>
+                </ul>
+            </div>
+        </li>
+        <hr>
+        <a href="/"><img src="/static/public/images/icons-biodata/logout.png" alt="logout" width="30px"></a>
+    </ul>
+</div>

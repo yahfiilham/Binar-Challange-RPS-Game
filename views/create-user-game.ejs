@@ -1,0 +1,52 @@
+<%- include('layouts/header') %> 
+
+<%- include('layouts/nav') %> 
+
+<section class="container-fluid">
+    <div class="row">
+        <div class="col-3">
+            <!-- sidebar -->
+            <%- include('layouts/side-bar') %> 
+            <!-- end sidebar -->
+        </div>
+        <div class="col-9 mt-4">
+            <div class="container mt-3">
+                <div class="row">
+                    <div class="com-md-6">
+                        <h2>form create user</h2>
+            
+                        <% if (typeof errors != 'undefined') { %>
+                            <div class="alert alert-danger" role="alert">
+                                <ul>
+                                    <% errors.forEach(error => { %>
+                                        <li><%= error.msg %> </li>
+                                    <% }) %>
+                                </ul>
+                            </div>
+                        <% } %>
+            
+                        <form method="post" action="/user-game">
+                            <div class="mb-3">
+                                <label for="username" class="form-label">Username</label>
+                                <input type="text" class="form-control" id="username" name="username" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="email" class="form-label">Email</label>
+                                <input type="text" class="form-control" id="email" name="email" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="password" class="form-label">Password</label>
+                                <input type="password" class="form-control" id="password" name="password" required>
+                            </div>
+                            
+                            <button type="submit" class="btn btn-primary add-user">Create</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<%- include('layouts/footer') %> 

@@ -1,0 +1,86 @@
+<%- include('layouts/header') %> 
+
+<%- include('layouts/nav') %> 
+
+<section class="container-fluid">
+    <div class="row">
+        <div class="col-3">
+            <!-- sidebar -->
+            <%- include('layouts/side-bar') %> 
+            <!-- end sidebar -->
+        </div>
+        <div class="col-9 mt-4">
+            <% if (msg.length !== 0) { %>
+                <div class="alert alert-success alert-dismissible fade show text-center" role="alert">
+                    <%= msg %> 
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            <% } %>
+            <a href="/user-game/create" class="btn mb-2 btn-primary">Create User</a>
+            <!-- table user -->
+            <div class="scroll">
+                <table class="table table-bordered table-striped text-center">
+                    <thead>
+                        <tr>
+                            <th scope="col">No.</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Username</th>
+                            <th scope="col">Points</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% if (users.length === 0) { %>
+                            <tr>
+                                <td colspan="4">
+                                    <div class="alert alert-danger" role="alert">
+                                        Data kontak masih Kosong!
+                                    </div>
+                                </td>
+                            </tr>
+                        <% } %>
+                        <% users.forEach((user, i) => { i++ %>
+                            <tr>
+                                <th scope="row"><%= i++%> </th>
+                                <td><%= user.User_Game_Biodata[0] ? `${user.User_Game_Biodata[0].first_name} ${user.User_Game_Biodata[0].last_name}` : '' %> </td>
+                                <td><%= user.username %> </td>
+                                <td><%= user.User_Game_History ? user.User_Game_History.points : '' %> </td>
+                                <td>
+                                    <div class="dropdown d-inline-block">
+                                        <button class="btn dropdown-toggle btn-success badge rounded-pill" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                            <i class="bi bi-info-circle me-2"></i>Detail
+                                        </button>
+                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                            <!-- <li><a class="dropdown-item" href="user-game/biodata/<%= user.User_Game_Biodata[0] ? user.User_Game_Biodata[0].user_game_id : '1234567' %>">Biodata</a></li>
+                                            <li><a class="dropdown-item" href="user-game/history/<%= user.User_Game_Biodata[0] ? user.User_Game_Biodata[0].user_game_id : '1234567' %>">History</a></li> -->
+                                            <li><a class="dropdown-item" href="user-game/biodata/<%= user.id %>">Biodata</a></li>
+                                            <li><a class="dropdown-item" href="user-game/history/<%= user.id %>">History</a></li>
+                                        </ul>
+                                    </div>
+                                    <div class="dropdown ms-auto d-inline-block">
+                                        <a href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                                            <img src="/static/public/images/icons-biodata/menu-history.png" class="img-fluid " width="25px" alt="menu">
+                                        </a>
+                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                            <li><a class="dropdown-item" href="/user-game/update/<%= user.id %>">Update</a></li>
+                                            <li>
+                                                <form method="POST" action="/user-game?_method=DELETE" enctype="application/x-www-form-urlencoded" class="dropdown-item">
+                                                    <input type="hidden" name="id" value="<%= user.id || user.User_Game_Biodata[0].user_game_id || user.User_Game_History.user_game_id  %>">
+                                                    <button type="submit" class="btn btn-white" onclick="return confirm('Delete ?');" style="padding: 0;">Delete</button>
+                                                </form>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </td>
+                            </tr>                    
+                        <% }) %>
+                    </tbody>
+                </table>
+            </div>
+                <!-- end dtable user -->
+        </div>
+    </div>
+</section>
+
+
+<%- include('layouts/footer') %> 

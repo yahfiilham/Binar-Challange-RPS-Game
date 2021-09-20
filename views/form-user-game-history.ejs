@@ -1,0 +1,55 @@
+<%- include('layouts/header') %> 
+
+<%- include('layouts/nav') %> 
+
+<section class="container-fluid">
+    <div class="row">
+        <div class="col-3">
+            <!-- sidebar -->
+            <%- include('layouts/side-bar') %> 
+            <!-- end sidebar -->
+        </div>
+        <div class="col-9 mt-4">
+            <div class="container mt-3">
+                <div class="row">
+                    <div class="com-md-6">
+                        <h2>form create User History</h2>
+            
+                        <% if (typeof errors != 'undefined') { %>
+                            <div class="alert alert-danger" role="alert">
+                                <ul>
+                                    <% errors.forEach(error => { %>
+                                        <li><%= error.msg %> </li>
+                                    <% }) %>
+                                </ul>
+                            </div>
+                        <% } %>
+            
+                        <form method="post" action="/user-game/history/<%= id %>">
+                            <div class="mb-3">
+                                <label for="totalMatch" class="form-label">totalMatch</label>
+                                <input type="text" class="form-control" id="totalMatch" name="totalMatch" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="matchWon" class="form-label">matchWon</label>
+                                <input type="text" class="form-control" id="matchWon" name="matchWon" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="points" class="form-label">Points</label>
+                                <input type="text" class="form-control" id="points" name="points" required>
+                            </div>
+                            <div class="mb-3">
+                                <!-- <label for="userGameId" class="form-label">User Game Id</label> -->
+                                <input type="hidden" class="form-control" id="userGameId" name="userGameId" value="<%= id %>" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary add-user">Create</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<%- include('layouts/footer') %> 

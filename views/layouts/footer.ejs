@@ -1,0 +1,54 @@
+<!-- my js -->
+<script>
+
+    // manipulasi icon panah
+    const togglePanah = document.querySelectorAll('.toggle-panah');
+    const websitePanah = document.querySelector('.website');
+    const formsPanah = document.querySelector('.forms');
+    const tablesPanah = document.querySelector('.tables');
+    
+    function website () {
+        websitePanah.classList.toggle('panah')
+    }
+    function crud () {
+        formsPanah.classList.toggle('panah')
+    }
+    function tables () {
+        tablesPanah.classList.toggle('panah')
+    }
+
+    // manupulasi links
+    const links = document.querySelectorAll('.side-bar .side-bar-items a');
+    const currentLocation = window.location.href;
+    console.log(currentLocation);
+    const itemLength = links.length;
+    for(let i = 0; i < itemLength; i++) {
+        if (links[i].href === currentLocation) {
+            links[i].className = 'nav-link links'
+        }
+    }
+
+    // // manipulasi option user id
+    // const userId = document.querySelector('#userGameId');
+    // const addUser = document.querySelector('.add-user');
+    
+    // addUser.addEventListener('click', function() {
+    //     userId.getAttribute('')
+    // })
+
+    // manipulasi card biodata
+    const cardBody = document.querySelector('.card-body');
+    const card2 = document.querySelector('.card-2');
+
+    cardBody.addEventListener('click', function() {
+        card2.classList.toggle('d-none');
+    });
+    
+</script>
+
+<!-- Option 1: Bootstrap Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+
+</body>
+</html>

@@ -1,0 +1,94 @@
+<%- include('layouts/header') %> 
+
+<%- include('layouts/nav') %> 
+
+<section class="container-fluid">
+    <div class="row">
+        <div class="col-3">
+            <!-- sidebar -->
+            <%- include('layouts/side-bar') %> 
+            <!-- end sidebar -->
+        </div>
+        <div class="col-9 mt-4">
+            <% if (msg.length !== 0) { %>
+                <div class="alert alert-success alert-dismissible fade show text-center" role="alert">
+                    <%= msg %> 
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            <% } %>
+            <!-- card biodata user -->
+            <div class="row mx-auto">
+                <div class="col-md-4">
+                    <% if (!user || !user.User_Game_Biodata[0]) { %>
+                        <div class="alert alert-danger" role="alert">
+                            Biodata User not found! 
+                            <a href="/user-game" class="alert-link">back</a>
+                            <a href="/user-game/biodata/create/<%= user.id %>" class="btn btn-primary badge ms-md-2">Create</a>
+                        </div>
+                    <% } else { %>
+                    <div class="card shadow p-3 mb-5 bg-body rounded" style="width: 18rem;">
+                            <div class="dropdown ms-auto">
+                                <a href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <img src="/static/public/images/icons-biodata/menu.png" class="img-fluid " width="15px" alt="menu">
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                    <li><a class="dropdown-item" href="/user-game/biodata/update/<%= user.User_Game_Biodata[0].user_game_id %>">Update</a></li>
+                                    <li><a class="dropdown-item" href="/user-game">Back</a></li>
+                                </ul>
+                            </div>
+                            <div class="card-body" style="cursor: pointer;">
+                                <h3 class="text-center mb-md-3">Biodata</h3>
+                                <div class="text-center">
+                                    <img src="\static\<%= user.User_Game_Biodata[0].image %>" class="rounded-circle bg-warning" width="120px" height="120px"  alt="yahfi">
+                                </div>
+                                <div class="bg-secondary" style="padding: 70px 0 20px 0; margin-top: -50px; color: #A1A1A1;">
+                                    <p class="card-subtitle mb-2 text-white ms-md-4"><img src="/static/public/images/icons-biodata/user.png" class="img-fluid me-md-2" width="18px" alt="user">  <%= `${user.User_Game_Biodata[0].first_name} ${user.User_Game_Biodata[0].last_name}` %> </p>
+                                    <p class="card-subtitle mb-2 ms-md-4"><img src="/static/public/images/icons-biodata/birth-date.png" class="img-fluid me-md-2" width="18px" alt="birth-date">  <%= user.User_Game_Biodata[0].date_of_birth %> </p>
+                                    <p class="card-subtitle mb-2 ms-md-4"><img src="/static/public/images/icons-biodata/age.png" class="img-fluid me-md-2" width="18px" alt="age">  <%= user.User_Game_Biodata[0].age %> years old</p>
+                                    <p class="card-subtitle mb-2 ms-md-4"><img src="/static/public/images/icons-biodata/phone-call.png" class="img-fluid me-md-2" width="18px" alt="phone-call"> <%= user.User_Game_Biodata[0].no_hp %> </p>
+                                    <p class="card-subtitle mb-2 ms-md-4"><img src="/static/public/images/icons-biodata/profession.png" class="img-fluid me-md-2" width="18px" alt="profession">  <%= user.User_Game_Biodata[0].profession %> </p>
+                                    <p class="card-subtitle mb-2 ms-md-4"><img src="/static/public/images/icons-biodata/education.png" class="img-fluid me-md-2" width="18px" alt="education">  <%= user.User_Game_Biodata[0].education %> </p>
+                                    <p class="card-subtitle mb-2 ms-md-4"><img src="/static/public/images/icons-biodata/address.png" class="img-fluid me-md-2" width="18px" alt="country">  <%= user.User_Game_Biodata[0].country %> </p>
+                                    <div class="text-center mt-md-4">
+                                        <a href="" class="nav-link d-inline" style="padding: 5px;"><img src="/static/public/images/icons-biodata/instagram.png" class="img-fluid" width="20px" alt="instagram"></a>
+                                        <a href="" class="nav-link d-inline" style="padding: 5px;"><img src="/static/public/images/icons-biodata/facebook.png" class="img-fluid" width="20px" alt="facebook"></a>
+                                        <a href="" class="nav-link d-inline" style="padding: 5px;"><img src="/static/public/images/icons-biodata/twitter.png" class="img-fluid" width="20px" alt="twitter"></a>
+                                        <a href="" class="nav-link d-inline" style="padding: 5px;"><img src="/static/public/images/icons-biodata/linkedin.png" class="img-fluid" width="20px" alt="linkedin"></a>
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
+                    <% } %> 
+                </div>
+                <div class="col-md-4 d-none card-2">
+                    <% if (!user) { %>
+                        <div class="alert alert-danger" role="alert">
+                            Data User not found! 
+                            <a href="/user-game" class="alert-link">back</a>
+                        </div>
+                    <% } else { %>
+                    <div class="card shadow p-3 mb-5 bg-secondary rounded" style="width: 18rem;">
+                        <div class="card-body">
+                            <h3 class="text-center text-white">Biodata</h3>
+                            <div class="" style="color: #A1A1A1;">
+                                <p class="card-subtitle mb-3 text-center"><small><%= user.User_Game_Biodata[0] ? user.User_Game_Biodata[0].bio  : ''%></small></p>
+                            </div>
+                            <div class="bg-white text-center py-4">
+                                <img src="/static/public/images/icons-biodata/qr-code.png" alt="" width="150px">
+                            </div>
+                            <div class="text-white mt-3 ms-5">
+                                <p>EXPIRE: <span style="color: #A1A1A1;">21-12-21</span></p>
+                                <p>ID NO: <span style="color: #A1A1A1;">323453123-1</span></p>
+                            </div>
+                        </div>
+                    </div>
+                    <% } %> 
+                </div>
+            </div>
+            <!-- end card biodata user -->
+        </div>
+    </div>
+</section>
+
+
+<%- include('layouts/footer') %> 
