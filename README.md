@@ -1,4 +1,2 @@
-CRUD api user game managemen
+CRUD user game managemet
 dibuat dengan nodeJs - expressJs - sequelize
-
-belum ada auth/login sistem (masih pengerjaan)

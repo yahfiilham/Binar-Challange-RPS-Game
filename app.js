@@ -52,16 +52,32 @@ app.use(bodyParser.json());
 app.use(multer({storage: fileStorage, fileFilter: fileFilter}).single('image'));
 
 
-const helloRoutes = require('./src/routes/hello');
+// const helloRoutes = require('./src/routes/hello');
 const userGameRoutes = require('./src/routes/user-game');
 const userGameBiodataRoutes = require('./src/routes/user-game-biodata');
 const userGameHistoryRoutes = require('./src/routes/user-game-history');
+const userLogin = require('./src/routes/login');
 
-
-app.use('/', helloRoutes);
-app.use('/', userGameRoutes);
 app.use('/', userGameBiodataRoutes);
 app.use('/', userGameHistoryRoutes);
+app.use('/', userLogin);
+
+// buat middleware buat login
+// app.use((req, res, next) => {
+//     if (req.path === '/' || req.path === `/user-game/create` || req.path === '/user-game?isLogin=true' || req.path === '/ user-game/biodata/:id') {
+//         next();
+//     } else if (req.path === '/user-game') {
+//         // console.log(req.query.isLogin); // /user-game?isLogin=true
+//         if (req.query.isLogin == 'true') {
+//             next();
+//         } else {
+//             res.redirect('/login');
+//         }
+//     } 
+// });
+
+// app.use('/', helloRoutes);
+app.use('/', userGameRoutes);
 
 app.listen(port, () => {
     console.log(`Example app listening at http://localhost:${port}`);
