@@ -70,7 +70,7 @@ exports.createUserGame = (req, res) => {
             //     data: user,
             // });
             req.flash('msg', 'User created successfully!');
-            res.redirect('/user-game?isLogin=true');
+            res.redirect('/user-game');
         });
     });
 }
