@@ -52,7 +52,7 @@ app.use(bodyParser.json());
 app.use(multer({storage: fileStorage, fileFilter: fileFilter}).single('image'));
 
 
-// const helloRoutes = require('./src/routes/hello');
+const helloRoutes = require('./src/routes/hello');
 const userGameRoutes = require('./src/routes/user-game');
 const userGameBiodataRoutes = require('./src/routes/user-game-biodata');
 const userGameHistoryRoutes = require('./src/routes/user-game-history');
@@ -76,7 +76,7 @@ app.use('/', userLogin);
 //     } 
 // });
 
-// app.use('/', helloRoutes);
+app.use('/', helloRoutes);
 app.use('/', userGameRoutes);
 
 app.listen(port, () => {

@@ -4,9 +4,9 @@ const router = express.Router();
 
 const { getPageLogin, createLogin, getDataUsersLogin } = require('../controllers/login');
 
-router.get('/', getPageLogin);
+router.get('/login', getPageLogin);
 
-router.post('/', createLogin);
+router.post('/login', createLogin);
 
 router.get('/users/forgot-password', getDataUsersLogin);
 

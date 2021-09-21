@@ -133,17 +133,17 @@ exports.updateUserGame = (req, res) => {
     // validasi input user
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-        return res.status(400).json({
-            status: 'failed',
-            message: 'Invalid input value!',
-            data: null,
-            errors: errors.array(),
-        });
-        // return res.render('update-user-game', {
-        //     title: "Form Update User",
+        // return res.status(400).json({
+        //     status: 'failed',
+        //     message: 'Invalid input value!',
+        //     data: null,
         //     errors: errors.array(),
-            
-        // })
+        // });
+        return res.render('update-user-game', {
+            title: "Form Update User",
+            errors: errors.array(),
+            user: req.body,
+        })
     }
 
     // proses update
