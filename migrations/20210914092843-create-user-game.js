@@ -9,14 +9,18 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       username: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        unique: true, // Tambahkan constraint unique di username
+        allowNull: false
       },
       password: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull: false
       },
-      email: {
-        type: Sequelize.STRING
-      },
+      role: {
+        type: Sequelize.STRING,
+        allowNull: false
+      }
     });
   },
   down: async (queryInterface, Sequelize) => {

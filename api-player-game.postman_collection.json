@@ -1,0 +1,246 @@
+{
+	"info": {
+		"_postman_id": "9944b551-51b4-44e7-9bc3-3553e868fe0b",
+		"name": "api-player-game",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "player register",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NjIsInVzZXJuYW1lIjoiY29iYTgiLCJpYXQiOjE2MzMxNDc0MDR9.9yovsAZ4ARCcpmQuHU0dvm6bAx3jxNm6FpRTXoKoD1I",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"ipin\",\r\n    \"password\": \"admin123\",\r\n    \"role\": \"player\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:5000/api/auth/register",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"auth",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "login user api",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"ipin\",\r\n    \"password\": \"admin123\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:5000/api/auth/login",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create room",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NjYsInVzZXJuYW1lIjoidXBpbiIsImlhdCI6MTYzMzk1OTgzN30.uPmGYwGdmLncYlGN6OD_Ls5M1lCa4Qy3i4-5koh3LPg",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "roomName",
+							"value": "room10",
+							"type": "text"
+						}
+					],
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:5000/api/room/create-room",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"room",
+						"create-room"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "game fight player 1",
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NjYsInVzZXJuYW1lIjoidXBpbiIsImlhdCI6MTYzMzk1OTgzN30.uPmGYwGdmLncYlGN6OD_Ls5M1lCa4Qy3i4-5koh3LPg",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"handChoiceRound1\": \"rock\",\r\n    \"handChoiceRound2\": \"rock\",\r\n    \"handChoiceRound3\": \"paper\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:5000/api/room/fight/38",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"room",
+						"fight",
+						"38"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "game fight player 2",
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NjcsInVzZXJuYW1lIjoiaXBpbiIsImlhdCI6MTYzMzk1OTk5N30.dqgKj5yTsx-IsX9n7qy2R0uefv6_arjQWWWUl_zfOHQ",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"handChoiceRound1\": \"paper\",\r\n    \"handChoiceRound2\": \"paper\",\r\n    \"handChoiceRound3\": \"rock\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:5000/api/room/fight/39",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"room",
+						"fight",
+						"39"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "history game player 1",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NjEsInVzZXJuYW1lIjoiY29iYSIsImlhdCI6MTYzMzkzMzg0MX0.gL-4FSg-oPtId32MWK7xMqihcvAwIMil3TuqqNZKTG0",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:5000/api/user-game/history/66",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"user-game",
+						"history",
+						"66"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "history game player 2",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NjEsInVzZXJuYW1lIjoiY29iYSIsImlhdCI6MTYzMzkzMzg0MX0.gL-4FSg-oPtId32MWK7xMqihcvAwIMil3TuqqNZKTG0",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:5000/api/user-game/history/67",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"user-game",
+						"history",
+						"67"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

@@ -26,6 +26,15 @@ module.exports = {
           as: 'userGameId'
         }
       },
+      room_id: {
+        type: Sequelize.INTEGER,
+        onDelete: "CASCADE",
+        references: {
+          model: 'room',
+          key: 'id', 
+          as: 'room_id'
+        }
+      },
     });
   },
   down: async (queryInterface, Sequelize) => {

@@ -1,6 +1,7 @@
 const { User_Game_History, User_Game } = require('../../models');
-
 const { validationResult } = require("express-validator");
+
+// const Game = require('../../public/javascript/game');
 
 exports.getFormUserHistory = (req, res) => {
     User_Game_History.findOne({where: { id: req.params.id }})
@@ -38,27 +39,11 @@ exports.createUserGameHistory = (req, res) => {
         user_game_id: userGameId
     })
         .then(user => {
-            // res.status(201).json({
-            //     status: 'success',
-            //     message: `data with user game id ${userGameId} has been created`,
-            //     data: user,
-            // });
             id =  req.params.id;
-            req.flash('msg', 'User History created successfully!');
+            req.flash('msg', 'user game history has been created into the database!');
             res.redirect(`/user-game/history/${id}`);
         });
 }
-
-exports.getAllUserGameHistory = (req, res) => {
-        User_Game_History.findAll()
-        .then(user => {
-            res.status(200).json({
-                status: "success",
-                message: 'get all data users game history success',
-                data: user,
-            });
-        });
-    }
 
 exports.getUserGameHistory = (req, res) => {
     User_Game_History.findAll({
@@ -69,20 +54,6 @@ exports.getUserGameHistory = (req, res) => {
         }
     })
         .then(users => {
-
-            // if (users) {
-            //     res.status(200).json({
-            //         status: 'success',
-            //         message: `data with id ${req.params.id} has been found!`,
-            //         data: users,
-            //     });
-            // } else {
-            //     res.status(404).json({
-            //         status: 'failed',
-            //         message: `Data with the id ${req.params.id} not found!`,
-            //         data: null,
-            //     });
-            // }
             userGameId = req.params.user_game_id
             res.render('dashbord-history', {
                 title: 'Dashbord | History',
@@ -91,6 +62,15 @@ exports.getUserGameHistory = (req, res) => {
                 msg: req.flash('msg'),
             });
         });
+};
+
+exports.getPlayerHistory = (req, res) => {
+    User_Game_History.findAll({
+        where: { user_game_id: req.params.id},
+    })
+    .then(history => {
+        res.status(200).json({history});
+    });
 };
 
 exports.getPageUpdateUserHistory = (req, res) => {
@@ -128,42 +108,8 @@ exports.updateUserGameHistory = (req, res) => {
             where: { id: req.body.id }
         })
         .then(result => {
-            // const updateUsers = User_Game_History.findOne({
-            //     where: { id: req.params.id }
-            // })
-            // .then(user => {
-            //     if (!user) {
-            //         res.status(404).json({
-            //             status: 'failed',
-            //             message: `Data with the id ${req.params.id} not found!`,
-            //             data: null,
-            //         })
-            //     }
-    
-            //     res.status(201).json({
-            //         status: 'success',
-            //         message: `Data with the user game id ${userGameId} has been updated in database!`,
-            //         data: user,
-            //     });
-            // });
             id = req.params.id;
-            req.flash('msg', 'User History update successfully!');
+            req.flash('msg', 'user game history has been updated in the database!');
             res.redirect(`/user-game/history/${id}`);
         });
-}
-
-exports.deleteUserGameHistory = (req, res) => {
-    User_Game_History.destroy({
-        where: { id: req.params.id }
-    })
-    .then(result => {
-        const updateUsers = User_Game_History.findAll()
-        .then(user => {
-            res.status(200).json({
-                status: 'success',
-                message: `Data with the id ${req.params.id} has been deleted!`,
-                data: user,
-            });
-        });
-    });
 }

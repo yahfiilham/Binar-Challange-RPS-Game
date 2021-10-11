@@ -1,0 +1,26 @@
+<%- include('layouts/header') %> 
+
+<%- include('layouts/nav') %> 
+
+<div class="container">
+    <!-- Code ini akan berjalan bila terjadi error -->
+    <% if (messages .error) { %>
+        <h5><%= messages.error %></h5>
+    <% } %>
+
+    <div class="row justify-content-md-center" style="margin-top: 100px">
+        <div class="col-md-4 card shadow-sm p-3 mb-5 bg-body">
+            <form method="POST" action="/room/fight/<%= room.id %> ">
+                <div class="form-group mt-md-4">
+                    <label for="uniq_code" class="mb-md-2">Unique Code</label>
+                    <input name="uniq_code" type="text" class="form-control login" id="uniq_code" placeholder="Insert your unique code room">
+                </div>
+                <button type="submit" class="btn btn-warning mt-md-4 px-md-4">Start Game</button>
+            </form>
+            <a href="/user-game" class="mt-md-3 mb-md-3 text-decoration-none ">&laquo; Back To Dashbord</a>
+        </div>
+    </div>
+</div>
+
+
+<%- include('layouts/footer') %> 

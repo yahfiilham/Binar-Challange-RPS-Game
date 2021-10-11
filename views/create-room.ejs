@@ -1,0 +1,26 @@
+<%- include('layouts/header') %> 
+
+<%- include('layouts/nav') %> 
+
+<div class="container">
+    <!-- Code ini akan berjalan bila terjadi error -->
+    <% if (messages .error) { %>
+        <h5><%= messages.error %></ h5>
+    <% } %>
+
+    <div class="row justify-content-md-center" style="margin-top: 100px">
+        <div class="col-md-4 card shadow-sm p-3 mb-5 bg-body">
+            <form method="POST" action="/user-game/create-room">
+                <div class="form-group mt-md-4">
+                    <label for="roomName" class="mb-md-2">Room Name</label>
+                    <input name="roomName" type="text" class="form-control login" id="roomName" placeholder="Insert your room name">
+                </div>
+                <button type="submit" class="btn btn-warning mt-md-4 px-md-4">Create Room</button>
+            </form>
+            <a href="/user-game" class="mt-md-3 mb-md-3 text-decoration-none ">&laquo; Back To Dashbord</a>
+        </div>
+    </div>
+</div>
+
+
+<%- include('layouts/footer') %> 

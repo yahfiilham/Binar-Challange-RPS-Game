@@ -22,7 +22,8 @@ module.exports = (sequelize, DataTypes) => {
     total_match: DataTypes.INTEGER,
     match_won: DataTypes.INTEGER,
     points: DataTypes.INTEGER,
-    user_game_id: DataTypes.INTEGER
+    user_game_id: DataTypes.INTEGER,
+    room_id: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'User_Game_History',

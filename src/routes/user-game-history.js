@@ -3,7 +3,9 @@ const router = express.Router();
 
 const { body } = require('express-validator');
 
-const { createUserGameHistory, getFormUserHistory, getAllUserGameHistory, getUserGameHistory, updateUserGameHistory, deleteUserGameHistory, getPageUpdateUserHistory } = require('../controllers/user-game-history');
+const restrick = require('../../middlewares/restrick')
+
+const { createUserGameHistory, getFormUserHistory, getUserGameHistory, updateUserGameHistory, getPageUpdateUserHistory, getPlayerHistory} = require('../controllers/user-game-history');
 
 // GET form user game bioddata
 router.get('/user-game/history/create/:id', getFormUserHistory);
@@ -17,11 +19,12 @@ router.post('/user-game/history/:id', [
     
 ], createUserGameHistory);
 
-// READ all data user-game-history
-router.get('/user-game/history', getAllUserGameHistory);
 
 // READ detail data user-game-history
 router.get('/user-game/history/:user_game_id', getUserGameHistory);
+
+// READ detail data user-game-history in postman
+router.get('/api/user-game/history/:id', restrick, getPlayerHistory);
 
 // GET form update user-game history
 router.get('/user-game/history/update/:id', getPageUpdateUserHistory);
@@ -35,7 +38,5 @@ router.put('/user-game/history/:id', [
     
 ], updateUserGameHistory);
 
-// DELETE data user-game-history
-router.delete('/user-game/history/:id', deleteUserGameHistory);
 
 module.exports = router;

@@ -53,27 +53,12 @@ exports.createUserGameBiodata = (req, res) => {
         user_game_id: userGameId
     })
     .then(user => {
-        // res.status(201).json({
-        //     status: 'success',
-        //     message: `user Biodata with name ${firstName} ${lastName} has been created`,
-        //     data: user,
-        // });
         id = req.params.id;
-        req.flash('msg', 'User Biodata created successfully!');
+        req.flash('msg', 'user biodata has been created into the database!');
         res.redirect(`/user-game/biodata/${id}`);
     });
 }
 
-exports.getAllUserGameBiodata = (req, res) => {
-    User_Game_Biodata.findAll()
-        .then(user => {
-            res.status(200).json({
-                status: "success",
-                message: 'get all data users game success',
-                data: user,
-            });
-        });
-}
 
 exports.getPageUpdateUserBiodata = (req, res) => {
     User_Game_Biodata.findOne({where: { user_game_id: req.params.user_game_id },})
@@ -127,72 +112,9 @@ exports.updateUserGameBiodata = (req, res) => {
             where: { user_game_id: req.body.userGameId }
         })
         .then(result => {
-            // const updateUsers = User_Game_Biodata.findOne({
-            //     where: { id: req.params.id }
-            // })
-            // .then(user => {
-            //     if (!user) {
-            //         res.status(404).json({
-            //             status: 'failed',
-            //             message: `Data with the id ${req.params.id} not found!`,
-            //             data: null,
-            //         })
-            //     }
-    
-            //     res.status(201).json({
-            //         status: 'success',
-            //         message: `Data with the name ${firstName} ${lastName} has been updated in database!`,
-            //         data: user,
-            //     });
-            // });
             id = req.params.id;
             console.log(id);
-            req.flash('msg', 'User Biodata update successfully!');
+            req.flash('msg', 'user biodata has been updated in the database!');
             res.redirect(`/user-game/biodata/${id}`);
         });
-}
-
-exports.getDetailUserGameBiodata = (req, res) => {
-    User_Game_Biodata.findOne({
-        where: { user_game_id: req.params.user_game_id },
-        include: {
-            model: User_Game,
-            // as: 'userGame',
-        }
-    })
-        .then(user => {
-            // if (user) {
-            //     res.status(200).json({
-            //         status: 'success',
-            //         message: `data with id ${req.params.id} has been found!`,
-            //         data: user,
-            //     });
-            // } else {
-            //     res.status(404).json({
-            //         status: 'failed',
-            //         message: `Data with the id ${req.params.id} not found!`,
-            //         data: null,
-            //     });
-            // }
-            // res.render('dashbord-biodata', {
-            //     title: 'Dashbord | User Biodata',
-            //     user,
-            // });
-        });
-}
-
-exports.deleteUserGameBiodata = (req, res) => {
-    User_Game_Biodata.destroy({
-        where: { id: req.params.id }
-    })
-    .then(result => {
-        const updateUsers = User_Game_Biodata.findAll()
-        .then(user => {
-            res.status(200).json({
-                status: 'success',
-                message: `Data with the id ${req.params.id} has been deleted!`,
-                data: user,
-            });
-        });
-    });
 }

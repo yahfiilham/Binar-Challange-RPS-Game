@@ -1,0 +1,17 @@
+<%- include('layouts/header') %> 
+
+
+<div class="container">
+    <div class="row justify-content-md-center" style="margin-top: 100px">
+        <div class="col-md-4 card shadow-sm p-3 mb-5 bg-body">
+            <h3>Room has been created</h3>
+            <h6>Unique Code: <%= user.uniq_code %></h6>
+            <p>Url: http://localhost:5000/room/fight/<%= user.id %> </p>
+            <a href="/room/fight/<%= user.id %> " class="btn mb-2 btn-warning">Start Game</a>
+            <a href="/user-game" class="mt-md-3 mb-md-3 text-decoration-none ">&laquo; Back To Dashbord</a>
+        </div>
+    </div>
+</div>
+
+
+<%- include('layouts/footer') %> 

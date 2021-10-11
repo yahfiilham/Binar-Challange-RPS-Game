@@ -1,2 +1,2 @@
-CRUD user game managemet
+RPS GAME
 dibuat dengan nodeJs - expressJs - sequelize

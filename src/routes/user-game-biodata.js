@@ -3,7 +3,7 @@ const router = express.Router();
 
 const { body } = require('express-validator');
 
-const { createUserGameBiodata, getAllUserGameBiodata, getPageUpdateUserBiodata, updateUserGameBiodata, deleteUserGameBiodata, getFormUserBiodata } = require('../controllers/user-game-biodata');
+const { createUserGameBiodata, getPageUpdateUserBiodata, updateUserGameBiodata, getFormUserBiodata } = require('../controllers/user-game-biodata');
 
 // GET form user game bioddata
 router.get('/user-game/biodata/create/:id', getFormUserBiodata);
@@ -21,14 +21,10 @@ router.post('/user-game/biodata/:id', [
     
 ], createUserGameBiodata);
 
-// READ all data user game biodata
-router.get('/user-game/biodata', getAllUserGameBiodata);
 
 // GET form update user-game
 router.get('/user-game/biodata/update/:user_game_id', getPageUpdateUserBiodata);
 
-// READ detail data user game biodata
-// router.get('/user-game/biodata/:user_game_id', getDetailUserGameBiodata);
 
 // UPDATE data user-game-biodata
 router.put('/user-game/biodata/:id', [
@@ -43,8 +39,6 @@ router.put('/user-game/biodata/:id', [
     
 ], updateUserGameBiodata);
 
-// DELETE data user-game-biodata
-router.delete('/user-game/biodata/:id', deleteUserGameBiodata);
 
 
 module.exports = router;
