@@ -2,6 +2,16 @@
 
 <%- include('layouts/nav') %> 
 
+<% if (typeof errors != 'undefined') { %>
+    <div class="alert alert-danger" role="alert">
+        <ul>
+            <% errors.forEach(error => { %>
+                <li><%= error.msg %> </li>
+            <% }) %>
+        </ul>
+    </div>
+<% } %>
+
 <section class="container-fluid">
     <div class="row justify-content-md-center" style="margin-top: 100px">
         <div class="col-md-4 card shadow-sm p-3 mb-5 bg-body">
@@ -19,7 +29,15 @@
                                 <label for="password" class="form-label">Password</label>
                                 <input type="password" class="form-control" id="password" name="password"  placeholder="Insert your password" required>
                             </div>
-                            
+                            <!-- <div class="mb-3">
+                                <label for="password" class="form-label">Role</label>
+                                <input type="password" class="form-control" id="password" name="password"  placeholder="Insert your password" required>
+                            </div> -->
+                            <div class="mb-3">
+                                <label for="role" class="form-label me-2">Role :</label>
+                                <input type="checkbox" name="role"  id="password" class="me-2" value="admin">admin</input type="checkbox">
+                                <input type="checkbox" name="role"  id="password" class="ms-3 me-2" value="player">player</input type="checkbox">
+                            </div>
                             <button type="submit" class="btn btn-primary add-user">Register</button>
                         </form>
                     </div>

@@ -17,6 +17,24 @@ module.exports = {
         // validasi input user
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
+            return res.render('register', {
+                title: "Register Page",
+                errors: errors.array()
+            })
+        }
+        // Kita panggil static method register yang sudah kita buat tadi
+        console.log(req.body);
+        User_Game.register (req.body)
+        .then(() => {
+            req.flash('msg', "registration successful, login now");
+            res.redirect ('/login');
+        })
+        .catch(err => next(err))
+    },
+    registerPostman : (req, res, next) => {
+        // validasi input user
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
             return res.status(400).json({
                 errors: errors.array()
             })

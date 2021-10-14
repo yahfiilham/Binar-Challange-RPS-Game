@@ -2,11 +2,15 @@
 
 <%- include('layouts/nav') %> 
 
+<% if (msg.length !== 0) { %>
+    <div class="alert alert-success alert-dismissible fade show text-center" role="alert">
+        <%= msg %> 
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+<% } %>
+
 <div class="container">
     <!-- Code ini akan berjalan bila terjadi error -->
-    <% if (messages .error) { %>
-        <h5><%= messages.error %></ h5>
-    <% } %>
 
     <div class="row justify-content-md-center" style="margin-top: 100px">
         <div class="col-md-4 card shadow-sm p-3 mb-5 bg-body">
@@ -26,7 +30,7 @@
                 <% } %>
                 <button type="submit" class="btn btn-primary mt-md-4 px-md-4">Login</button>
             </form>
-            <a href="/users/forgot-password" class="text-decoration-none mt-md-1"><small>forgot password?</small></a>
+            <p class="mt-md-2"><small>New to RPS Game?</small><a href="/register" class="text-decoration-none ms-2">Join now</a></p> 
             <a href="/" class="mt-md-3 mb-md-3 text-decoration-none ">&laquo; Back To Home</a>
         </div>
     </div>

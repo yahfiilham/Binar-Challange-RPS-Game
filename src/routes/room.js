@@ -7,7 +7,7 @@ const restrickLocal = require('../../middlewares/restrick-local');
 const restrick = require('../../middlewares/restrick');
 // const validationGame = require('../../middlewares/validation-game');
 
-const { createRoom, createRoomPostman, getPageRPS, rPSPostman, userInRoom, getPageInputUniqCode, getPageCreateRoom, inputUniqueCodeRoom } = require('../controllers/room');
+const { createRoom, createRoomPostman, getPageRPS, fightRPSGame, rPSPostman, getPageInputRoomCode, getPageCreateRoom, inputRoomCode } = require('../controllers/room');
 
 // create room client side
 router.get('/user-game/create-room', restrickLocal,  getPageCreateRoom);
@@ -17,11 +17,12 @@ router.post('/user-game/create-room', createRoom);
 router.post('/api/room/create-room', restrick, createRoomPostman);
 
 // get Page RPS Game
-router.get('/room/fight/play/:room_id', restrickLocal, getPageRPS);
+router.get('/room/fight/:room_id', restrickLocal, getPageRPS);
+router.post('/room/fight/:room_id', restrickLocal, fightRPSGame);
 
-// render game page validation
-router.get('/room/fight/:id', getPageInputUniqCode);
-router.post('/room/fight/:id', inputUniqueCodeRoom);
+// // render game page validation
+// router.get('/room/join', getPageInputRoomCode);
+// router.post('/room/join', inputRoomCode);
 
 // fight room di postman
 router.patch('/api/room/fight/:room_id', [

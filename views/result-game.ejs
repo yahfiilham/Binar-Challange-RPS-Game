@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+    <title>ROCK PAPER SCISSORS</title>
+    <!-- my css -->
+    <link rel="stylesheet" href="/static/public/stylesheet/game.css">
+</head>
+<body>
+    
+    <!-- game start -->
+    <section class="bg-game-start">
+        <!-- header -->
+        <header class="header">
+            <div class="previous">
+                <a href="/">
+                    <img src="/static/public/images/assets-game/pre.png" alt="">
+                </a>
+            </div>
+            <div class="logo">
+                <img src="/static/public/images/assets-game/logo-game.png" alt="logo">
+                <h1>ROCK PAPER SCISSORS</h1>
+            </div>
+        </header>
+        <main class="game-area">
+            <div class="player">
+                <h1 class="player-name"><%= player1.username %></h1>
+                <!-- player choice -->
+                <form method="POST" action="/room/fight/<%= room.id %>?_method=POST" enctype="application/x-www-form-urlencoded" class="">
+                    <div class="player-choice">
+                        <% if (room.hand_choice_player1[0] == 'rock') { %>
+                            <button type="submit" id="choice-style" name="handChoice" value="rock" class="style-choice">
+                                <img src="/static/public/images/assets-game/batu.png" alt="rock" class="rock ">
+                            </button>
+                        <% } else { %>
+                            <button type="submit" id="choice-style" name="handChoice" value="rock">
+                                <img src="/static/public/images/assets-game/batu.png" alt="rock" class="rock">
+                            </button>
+                        <% } %>
+                        
+                        <% if (room.hand_choice_player1[0] == 'paper') { %>
+                            <button type="submit" id="choice-style" name="handChoice" value="paper" class="style-choice">
+                                <img src="/static/public/images/assets-game/kertas.png" alt="paper" class="paper ">
+                            </button>
+                        <% } else { %>
+                            <button type="submit" id="choice-style" name="handChoice" value="paper">
+                                <img src="/static/public/images/assets-game/kertas.png" alt="paper" class="paper">
+                            </button>
+                        <% } %> 
+                    
+                        <% if (room.hand_choice_player1[0] == 'scissors') { %>
+                            <button type="submit" id="choice-style" name="handChoice" value="scissors" class="style-choice">
+                                <img src="/static/public/images/assets-game/gunting.png" alt="scissor" class="scissors ">
+                            </button>
+                        <% } else { %>
+                            <button type="submit" id="choice-style" name="handChoice" value="scissors">
+                                <img src="/static/public/images/assets-game/gunting.png" alt="scissor" class="scissors">
+                            </button>
+                        <% } %> 
+                    </div>
+                </form>
+            </div>
+            <!-- end player choice -->
+            <!-- result -->
+            <div class="result">
+                <div>
+                    <h1 class="style-result"><%= msg %> </h1>
+                </div>
+            </div>
+            <!-- end result -->
+            <!-- computer choice -->
+            <div class="comp">
+                <h1 class="comp-name"><%= player2.username %></h1>
+                <form method="POST" action="/room/fight/<%= room.id %>?_method=POST" enctype="application/x-www-form-urlencoded" class="">
+                    <div class="comp-choice">
+                        <% if (room.hand_choice_player2[0] == 'rock') { %>
+                            <button type="submit" id="choice-style" name="handChoice" value="rock" class="style-choice">
+                                <img src="/static/public/images/assets-game/batu.png" alt="rock" class="rock ">
+                            </button>
+                        <% } else { %>
+                            <button type="submit" id="choice-style" name="handChoice" value="rock">
+                                <img src="/static/public/images/assets-game/batu.png" alt="rock" class="rock">
+                            </button>
+                        <% } %>
+                        
+                        <% if (room.hand_choice_player2[0] == 'paper') { %>
+                            <button type="submit" id="choice-style" name="handChoice" value="paper" class="style-choice">
+                                <img src="/static/public/images/assets-game/kertas.png" alt="paper" class="paper ">
+                            </button>
+                        <% } else { %>
+                            <button type="submit" id="choice-style" name="handChoice" value="paper">
+                                <img src="/static/public/images/assets-game/kertas.png" alt="paper" class="paper">
+                            </button>
+                        <% } %> 
+                    
+                        <% if (room.hand_choice_player2[0] == 'scissors') { %>
+                            <button type="submit" id="choice-style" name="handChoice" value="scissors" class="style-choice">
+                                <img src="/static/public/images/assets-game/gunting.png" alt="scissor" class="scissors ">
+                            </button>
+                        <% } else { %>
+                            <button type="submit" id="choice-style" name="handChoice" value="scissors">
+                                <img src="/static/public/images/assets-game/gunting.png" alt="scissor" class="scissors">
+                            </button>
+                        <% } %> 
+                    </div>
+                </form>
+            </div>
+            <!-- end computer choice -->
+        </main>
+        <!-- refresh -->
+        <footer class="refresh">
+            <img src="/static/public/images/assets-game/refresh.png" alt="refresh">
+        </footer>
+        <!-- end refresh -->
+    </section>
+
+
+    <!-- my js -->
+    <!-- <script src="/static/public/javascript/game.js"></script> -->
+</body>
+</html>

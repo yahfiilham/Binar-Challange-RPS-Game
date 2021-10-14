@@ -49,7 +49,20 @@
             <!-- result -->
             <div class="result">
                 <div>
-                    <h1 class="versus">VS</h1>
+                    <% if (msg.length !== 0) { %>
+                    <form method="POST" action="/room/fight/<%= room.id %>?_method=POST" enctype="application/x-www-form-urlencoded" class="">
+                        <div class="alert alert-danger" role="alert">
+                            <% if (room.hand_choice_player1 == null) { %>
+                                <%= msg %>... <button type="submit" class="btn alert-link" name="handChoice" value="<%= room.hand_choice_player2[0]%>" style="margin-top: -4px; margin-left: -7px;">refresh</button>
+                            <% } else { %>
+                                <%= msg %>... <button type="submit" class="btn alert-link" name="handChoice" value="<%= room.hand_choice_player1[0]%>" style="margin-top: -4px; margin-left: -7px;">refresh</button>
+                            <% } %>
+                            
+                        </div>
+                    </form>
+                    <% } else { %>
+                        <h1 class="versus">VS</h1>
+                    <% } %>
                 </div>
             </div>
             <!-- end result -->

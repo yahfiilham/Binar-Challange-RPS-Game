@@ -163,7 +163,7 @@ button {
     line-height: 166.93px;
 }
 
-.player-choice button img:hover {
+.player-choice button img:hover, .comp-choice button img:hover {
     animation: shake .8s;
     animation-iteration-count: infinite;
 }

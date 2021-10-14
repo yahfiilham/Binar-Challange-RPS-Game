@@ -1,0 +1,17 @@
+<%- include('layouts/header') %> 
+
+
+<div class="container">
+    <div class="row justify-content-md-center" style="margin-top: 100px">
+        <div class="col-md-4 card shadow-sm p-3 mb-5 bg-body">
+            <div class="alert alert-danger" role="alert">
+                <%= error %> 
+            </div>
+            <p>Create new Room: <a href="/user-game/create-room">http://localhost:5000/user-game/create-room</a></p>
+            <p>History: <a href="/user-game/history/<%= id %>">http://localhost:5000/user-game/history/<%= id %></a></p>
+        </div>
+    </div>
+</div>
+
+
+<%- include('layouts/footer') %> 

@@ -125,5 +125,3 @@ class Game {
 const start = new Game();
 start.getPlayerChoice();
 start.reset();
-
-module.exports = Game;

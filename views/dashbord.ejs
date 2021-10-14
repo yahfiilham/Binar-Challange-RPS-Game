@@ -16,6 +16,13 @@
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
             <% } %>
+        
+            <% if (fail.length !== 0) { %>
+                <div class="alert alert-danger alert-dismissible fade show text-center" role="alert">
+                    <%= fail %> 
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            <% } %>
             <a href="/user-game/create-room" class="btn mb-2 btn-warning">Create Room RPS</a>
             <!-- table user -->
             <div class="scroll mt-md-2">

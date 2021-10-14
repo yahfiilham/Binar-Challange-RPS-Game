@@ -1,6 +1,6 @@
 const { room, user_in_room, User_Game, User_Game_History} = require('../../models');
 
-const { validationResult, check } = require("express-validator");
+const { validationResult } = require("express-validator");
 
 exports.getPageCreateRoom = (req, res) => {
     room.findAll()
@@ -29,10 +29,10 @@ exports.createRoom = (req, res) => {
         player1_id: req.user.dataValues.id,
         uniq_code: uniqCode
     })
-    .then(user => {
+    .then(room => {
         res.render('success-create-room', {
             title: 'Success Create Room',
-            user,
+            room,
         });
     })
 }
@@ -58,65 +58,353 @@ exports.createRoomPostman = (req, res) => {
     })
 }
 
-exports.getPageInputUniqCode = (req, res) => {
-    room.findOne({where: { id: req.params.id }})
-    .then(room => {
-        if (!room) {
-            return res.redirect('/user-game/create-room');
-        }
-        res.render('input-uniq-code', {
-            title: "Input Unique Code",
-            room,
-        })
-    })
-}
+// exports.getPageInputRoomCode = (req, res) => {
+//     room.findOne({where: { id: req.params.id }})
+//     .then(room => {
+//         if (!room) {
+//             return res.redirect('/user-game/create-room');
+//         }
+//         res.render('input-uniq-code', {
+//             title: "Input Unique Code",
+//             room,
+//             fail: req.flash('fail'),
+//         })
+//     })
+// }
 
-exports.inputUniqueCodeRoom = (req, res) => {
-    room.findOne({where: { id: req.params.id }})
-    .then(room => {
-        if (room.player1_id !== null) return (room.player2_id === null) ? room.update(
-            {
-                player2_id: req.user.dataValues.id,
-            }, {
-                where: { id: req.params.id }
-            }) : room.update (
-            {
-                player1_id: room.player1_id,
-                player2_id: room.player2_id
-            }, {
-                where: { id: req.params.id }
-            })
-    })
-    .then(result => {
-        if ((result.player1_id === req.user.dataValues.id || result.player2_id === req.user.dataValues.id) && result.uniq_code === req.body.uniq_code) {
-            res.redirect(`/room/fight/play/${req.params.id}`)
-        }
-    })
-}
+// exports.inputRoomCode = (req, res) => {
+//     room.findOne({where: { playerid: req.params.id }})
+    
+//     .then(room => {
+//         console.log('test', room);
+//         // req.flash('error', "");
+//         if ((room.player1_id === req.user.dataValues.id || room.player2_id === req.user.dataValues.id) && room.id === req.body.room_id) {
+//             res.redirect(`/room/fight/${room.id}`)
+//         }
+
+//         // return res.redirect(`/room/join/${req.params.id}`)
+//     })
+// }
 
 exports.getPageRPS = (req, res) => {
-    user_in_room.findOne({
-        where: { room_id: req.params.room_id },
-        include: {
-            model: room,
-        }
+    room.findOne({
+        where: { id: req.params.room_id },
     })
-    .then( async result => {
-        const player1 = await User_Game.findOne({
-            where: {id: result.room.player1_id}
-        });
+    .then( room => {
+        if (room.player1_id === null) {
+            return room.update({player1_id: req.user.dataValues.id,}, {where: { id: req.params.id }});
+        }
 
-        const player2 = await User_Game.findOne({
-            where: {id: result.room.player2_id}
-        });
+        if (room.player2_id === null) return (room.player1_id !== req.user.dataValues.id) ? room.update({player2_id: req.user.dataValues.id,}, {where: { id: req.params.id }}) : room.update({player1_id: req.user.dataValues.id,}, {where: { id: req.params.id }});
+
+        // if (req.user.dataValues.id !== room.player1_id && req.user.dataValues.id !== room.player2_id) return res.status(400).json({message: 'mohon maaf, room sudah penuh. Silahkan cari room yang lain'})
+
+        if (req.user.dataValues.id !== room.player1_id && req.user.dataValues.id !== room.player2_id) {
+            req.flash('fail', "mohon maaf, room sudah penuh. Silahkan cari room yang lain");
+            return res.redirect(`/user-game`);
+        } 
+        return room;
+    })
+    .then( room => {
         res.render('game', {
             title: "RPS Game",
-            player1,
-            player2
-        })
-        // res.json({result})
-    })
+            room,
+            msg: req.flash('msg'),
+        });
+    });
+}
 
+exports.fightRPSGame = (req, res) => {
+    room.findOne({
+        where: { id: req.params.room_id },
+    })
+    // input pilihan player round 1
+    .then( room => {
+        // player 1
+        if (req.user.dataValues.id ==  room.player1_id) {
+            if (room.hand_choice_player1 == null) {
+                console.log('tangan: ', req.body.handChoice);
+                return room.update({
+                    hand_choice_player1: [req.body.handChoice, null, null],
+                }, {where: { id: req.params.room_id }})
+                // room round 1
+            } 
+        }
+
+        // player 2
+        if (req.user.dataValues.id == room.player2_id) {
+            // console.log(room.hand_choice_player1 == null);
+            if (room.hand_choice_player2 == null) {
+                console.log('player2: ', req.body.handChoice);
+                return room.update({
+                    hand_choice_player2: [req.body.handChoice, null, null],
+                }, {where: { id: req.params.room_id }})
+                // room round 1
+            } 
+        }
+        return room;
+    })
+    // result round 1
+    .then(room => {
+        // console.log('room: ', room);
+        // jika player1 atau player2 belum memasukan pilihannya kasih tahu player lain untuk menunggu
+        // console.log(room.hand_choice_player1 == null);
+        // console.log(room.hand_choice_player2 == null);
+        if (room.hand_choice_player1 == null || room.hand_choice_player2 == null) {
+            // return res.status(400).json({
+            //     message: 'tunggu bentar ya, player lain belum input pilihan tangannya, coba sesaat lagi'
+            // })
+            req.flash('msg', 'waiting for opponents choice');
+            console.log(room.id);
+            return res.render(`game-waiting-opponent-choice`, {
+                room,
+                msg: req.flash('msg'),
+            })
+        }
+    
+        if(room.hand_choice_player1[0] == room.hand_choice_player2[0]) return room.update({
+            result_player1: [50, 0, 0],
+            result_player2: [50, 0, 0],
+        }, {where: { id: req.params.room_id }})
+    
+        if(room.hand_choice_player1[0] == 'rock') return (room.hand_choice_player2[0] == 'paper') ? room.update({
+            result_player1: [0, 0, 0],
+            result_player2: [100, 0, 0],
+        }, {where: { id: req.params.room_id }}) : room.update({
+            result_player1: [100, 0, 0],
+            result_player2: [0, 0, 0],
+        }, {where: { id: req.params.room_id }})
+    
+        if (room.hand_choice_player1[0] == 'paper') return (room.hand_choice_player2[0] == 'scissors') ? room.update({
+            result_player1: [0, 0, 0],
+            result_player2: [100, 0, 0],
+        }, {where: { id: req.params.room_id }}) : room.update({
+            result_player1: [100, 0, 0],
+            result_player2: [0, 0, 0],
+        }, {where: { id: req.params.room_id }})
+    
+        if(room.hand_choice_player1[0] == 'scissors') return (room.hand_choice_player2[0] == 'rock') ? room.update({
+            result_player1: [0, 0, 0],
+            result_player2: [100, 0, 0],
+        }, {where: { id: req.params.room_id }}) : room.update({
+            result_player1: [100, 0, 0],
+            result_player2: [0, 0, 0],
+        }, {where: { id: req.params.room_id }})
+
+        return room;
+    })
+    // hasil pertandingan ronde 1
+    .then( async room => {
+        console.log('final: ', room);
+        const totalScorePlayer1 = room.result_player1[0];
+        const totalScorePlayer2 = room.result_player2[0];
+
+        const player1 = await User_Game.findOne({where: {id: room.player1_id}});
+        const player2 = await User_Game.findOne({where: {id: room.player2_id}});
+        // console.log(player1);
+        // console.log(player2);
+
+        // penentuan pemenang
+        let winner = ((totalScorePlayer1, totalScorePlayer2) => {
+            // console.log(totalScorePlayer1);
+            // console.log(totalScorePlayer2);
+            if (totalScorePlayer1 > totalScorePlayer2) {
+                return win = `${player1.username} win`
+                // return res.render('')
+            }
+            if (totalScorePlayer1 < totalScorePlayer2) {
+                return win = `${player2.username} win`
+            }
+            if (totalScorePlayer1 = totalScorePlayer2) {
+                return win = 'DRAW'
+            }
+        });
+
+        const totalMatchPlayer1 = await User_Game_History.count({where: {user_game_id: room.player1_id}}) + 1;
+        const totalMatchPlayer2 = await User_Game_History.count({where: {user_game_id: room.player2_id}}) + 1;
+
+        // // console.log('hasil: ', winner(totalScorePlayer1, totalScorePlayer2));
+        // // kirimkan hasil pertandingan round 1
+        req.flash('msg', winner(totalScorePlayer1, totalScorePlayer2));
+        // // return res.redirect(`/room/fight/play/${room.id}`)
+        // return res.render('result-game', {
+        //     title: "RPS Game",
+        //     room,
+        //     msg: req.flash('msg'),
+        //     player1,
+        //     player2,
+        // });
+        // player 1 
+        if (req.user.dataValues.id ==  room.player1_id) {
+            User_Game_History.findOne({where: {room_id: req.params.room_id, user_game_id: req.user.dataValues.id}})
+            .then(check => {
+                // console.log(check);
+                // cek player sudah atau belum main di room yang dituju, jika belum player akan mendapatkan hasil pertandingan, jika sudah player akan mendapatkan pesan
+                if (check !== null) {
+                    req.flash('error', "sorry, you've played in the room, if you want to play again, create a new room or join a room via the link you got from your friends");
+                    return res.render('validasi-play-game', {
+                        title: 'Error Room',
+                        error: req.flash('error'),
+                        id: req.user.dataValues.id
+                    });
+                }
+    
+                return User_Game_History.create({
+                    room_id: room.id,
+                    user_game_id: req.user.dataValues.id,
+                    total_match: totalMatchPlayer1,
+                    points: totalScorePlayer1,
+                })
+                .then(() => {
+                    // console.log('test2: ', room);
+                    // req.flash('msg', winner(totalScorePlayer1, totalScorePlayer2));
+                    return res.render('result-game', {
+                        title: "RPS Game",
+                        room,
+                        msg: req.flash('msg'),
+                        player1,
+                        player2,
+                    });
+                })
+            })
+        }
+
+        // player 2
+        if (req.user.dataValues.id ==  room.player2_id) {
+            User_Game_History.findOne({where: {room_id: req.params.room_id, user_game_id: req.user.dataValues.id}})
+            .then(check => {
+                // console.log('history: ', check);
+                // cek player sudah atau belum main di room yang dituju, jika belum player akan mendapatkan hasil pertandingan, jika sudah player akan mendapatkan pesan
+                if (check !== null ) {
+                    req.flash('error', "sorry, you've played in the room, if you want to play again, create a new room or join a room via the link you got from your friends");
+                    return res.render('validasi-play-game', {
+                        title: 'Error Room',
+                        error: req.flash('error'),
+                        id: req.user.dataValues.id
+                    })
+                }
+    
+                return User_Game_History.create({
+                    room_id: room.id,
+                    user_game_id: req.user.dataValues.id,
+                    total_match: totalMatchPlayer2,
+                    points: totalScorePlayer2,
+                })
+                .then(() => {
+                    // console.log('test2: ', room);
+                    return res.render('result-game', {
+                        title: "RPS Game",
+                        room,
+                        msg: req.flash('msg'),
+                        player1,
+                        player2,
+                    });
+                })
+            })
+        }
+
+        // return room;
+    })
+    // input pilihan player round 2
+    // .then( () => {
+    //     room.findOne({
+    //         where: { id: req.params.room_id },
+    //     })
+    //     .then(room => {
+    //         console.log('room2: ', room);
+    //         // player 1
+    //         if (req.user.dataValues.id ==  room.player1_id) {
+    //             if (room.hand_choice_player1[1] == null) {
+    //                 console.log('tangan: ', req.body.handChoice);
+    //                 return room.update({
+    //                     hand_choice_player1: [room.hand_choice_player1[0], req.body.handChoice, null],
+    //                 }, {where: { id: req.params.room_id }});
+    //             } 
+    //         }
+    
+    //         // player 2
+    //         if (req.user.dataValues.id == room.player2_id) {
+    //             // console.log(room.hand_choice_player1 == null);
+    //             if (room.hand_choice_player2[1] == null) {
+    //                 console.log('player2: ', req.body.handChoice);
+    //                 return room.update({
+    //                     hand_choice_player2: [room.hand_choice_player2[0], req.body.handChoice, null],
+    //                 }, {where: { id: req.params.room_id }})
+    //             } 
+    //         }
+    //         return room;
+    //     })
+    //     // result round 2
+    //     .then(room => {
+    //         // console.log('room: ', room);
+    //         // jika player1 atau player2 belum memasukan pilihannya kasih tahu player lain untuk menunggu
+    //         console.log(room.hand_choice_player1[1] == null);
+    //         console.log(room.hand_choice_player2[1] == null);
+    //         if (room.hand_choice_player1[1] == null || room.hand_choice_player2[1] == null) {
+    //             return res.status(400).json({
+    //                 message: 'tunggu bentar ya, player lain belum input pilihan tangannya, coba sesaat lagi'
+    //             })
+    //         }
+        
+    //         if(room.hand_choice_player1[1] == room.hand_choice_player2[1]) return room.update({
+    //             result_player1: [room.result_player1[0], 50, room.result_player1[2]],
+    //             result_player2: [room.result_player2[0], 50, room.result_player2[2]],
+    //         }, {where: { id: req.params.room_id }});
+        
+    //         if(room.hand_choice_player1[1] == 'rock') return (room.hand_choice_player2[1] == 'paper') ? room.update({
+    //             result_player1: [room.result_player1[0], 0, room.result_player1[2]],
+    //             result_player2: [room.result_player2[0], 100, room.result_player2[2]],
+    //         }, {where: { id: req.params.room_id }}) : room.update({
+    //             result_player1: [room.result_player1[0], 100, room.result_player1[2]],
+    //             result_player2: [room.result_player2[0], 0, room.result_player2[2]],
+    //         }, {where: { id: req.params.room_id }});
+        
+    //         if (room.hand_choice_player1[1] == 'paper') return (room.hand_choice_player2[1] == 'scissors') ? room.update({
+    //             result_player1: [room.result_player1[0], 0, room.result_player1[2]],
+    //             result_player2: [room.result_player2[0], 100, room.result_player2[2]],
+    //         }, {where: { id: req.params.room_id }}) : room.update({
+    //             result_player1: [room.result_player1[0], 100, room.result_player1[2]],
+    //             result_player2: [room.result_player2[0], 0, room.result_player2[2]],
+    //         }, {where: { id: req.params.room_id }});
+        
+    //         if(room.hand_choice_player1[1] == 'scissors') return (room.hand_choice_player2[1] == 'rock') ? room.update({
+    //             result_player1: [room.result_player1[0], 0, room.result_player1[2]],
+    //             result_player2: [room.result_player2[0], 100, room.result_player2[2]],
+    //         }, {where: { id: req.params.room_id }}) : room.update({
+    //             result_player1: [room.result_player1[0], 100, room.result_player1[2]],
+    //             result_player2: [room.result_player2[0], 0, room.result_player2[2]],
+    //         }, {where: { id: req.params.room_id }});
+    //         return room;
+    //     })
+    //     // hasil pertandingan ronde 2
+    //     .then( room => {
+    //         // console.log('final: ', room);
+    //         const totalScorePlayer1 = room.result_player1[1];
+    //         const totalScorePlayer2 = room.result_player2[1];
+    
+    //         // penentuan pemenang
+    //         let winner = ((totalScorePlayer1, totalScorePlayer2) => {
+    //             // console.log(totalScorePlayer1);
+    //             // console.log(totalScorePlayer2);
+    //             if (totalScorePlayer1 > totalScorePlayer2) {
+    //                 return win = 'player 1 win'
+    //                 // return res.render('')
+    //             }
+    //             if (totalScorePlayer1 < totalScorePlayer2) {
+    //                 return win = 'player 2 win'
+    //             }
+    //             if (totalScorePlayer1 = totalScorePlayer2) {
+    //                 return win = 'DRAW'
+    //             }
+    //         });
+    
+    //         console.log(winner(totalScorePlayer1, totalScorePlayer2));
+    
+    //         // kirimkan hasil pertandingan round 1
+    //         req.flash('msg', winner(totalScorePlayer1, totalScorePlayer2));
+    //         return res.redirect(`/room/fight/play/${room.id}`)
+    //     })
+    // })
 }
 
 exports.rPSPostman = (req, res, next) => {
@@ -155,6 +443,7 @@ exports.rPSPostman = (req, res, next) => {
         // player 1
         if (req.user.dataValues.id ==  room.player1_id) {
             if (room.hand_choice_player1 == null) {
+                console.log('tangan: ', req.body.handChoiceRound1);
                 return room.update({
                     hand_choice_player1: [req.body.handChoiceRound1, req.body.handChoiceRound2, req.body.handChoiceRound3],
                 }, {where: { id: req.params.room_id }});

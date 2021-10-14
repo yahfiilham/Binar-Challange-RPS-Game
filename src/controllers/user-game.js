@@ -20,6 +20,7 @@ exports.getAllUserGame = (req, res) => {
             title: 'Dashbord | User',
             users,
             msg: req.flash('msg'),
+            fail: req.flash('fail'),
             id: req.user.dataValues.id,
         });
     });
