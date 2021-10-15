@@ -29,7 +29,7 @@
         </header>
         <main class="game-area">
             <div class="player">
-                <h1 class="player-name">Player 1</h1>
+                <h1 class="player-name"><%= player1.username %> </h1>
                 <!-- player choice -->
                 <form method="POST" action="/room/fight/<%= room.id %>?_method=POST" enctype="application/x-www-form-urlencoded" class="">
                     <div class="player-choice">
@@ -68,7 +68,7 @@
             <!-- end result -->
             <!-- computer choice -->
             <div class="comp">
-                <h1 class="comp-name">Player 2</h1>
+                <h1 class="comp-name"><%= player2.username %> </h1>
                 <form method="POST" action="/room/fight/<%= room.id %>?_method=POST" enctype="application/x-www-form-urlencoded" class="">
                     <div class="comp-choice">
                         <button type="submit" id="choice-style" name="handChoice" value="rock">

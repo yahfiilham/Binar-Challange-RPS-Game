@@ -105,11 +105,15 @@ exports.getPageRPS = (req, res) => {
         } 
         return room;
     })
-    .then( room => {
+    .then( async room => {
+        const player1 = await User_Game.findOne({where: {id: room.player1_id}});
+        const player2 = await User_Game.findOne({where: {id: room.player2_id}});
         res.render('game', {
             title: "RPS Game",
             room,
             msg: req.flash('msg'),
+            player1,
+            player2,
         });
     });
 }
@@ -145,11 +149,13 @@ exports.fightRPSGame = (req, res) => {
         return room;
     })
     // result round 1
-    .then(room => {
+    .then(async room => {
         // console.log('room: ', room);
         // jika player1 atau player2 belum memasukan pilihannya kasih tahu player lain untuk menunggu
         // console.log(room.hand_choice_player1 == null);
         // console.log(room.hand_choice_player2 == null);
+        const player1 = await User_Game.findOne({where: {id: room.player1_id}});
+        const player2 = await User_Game.findOne({where: {id: room.player2_id}});
         if (room.hand_choice_player1 == null || room.hand_choice_player2 == null) {
             // return res.status(400).json({
             //     message: 'tunggu bentar ya, player lain belum input pilihan tangannya, coba sesaat lagi'
@@ -159,6 +165,8 @@ exports.fightRPSGame = (req, res) => {
             return res.render(`game-waiting-opponent-choice`, {
                 room,
                 msg: req.flash('msg'),
+                player1,
+                player2,
             })
         }
     
