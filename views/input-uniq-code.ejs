@@ -2,12 +2,14 @@
 
 <%- include('layouts/nav') %> 
 
+<!-- Code ini akan berjalan bila terjadi error -->
+<% if (fail.length !== 0) { %>
+    <div class="alert alert-danger alert-dismissible fade show text-center" role="alert">
+        <%= fail %> 
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+<% } %>
 <div class="container">
-    <!-- Code ini akan berjalan bila terjadi error -->
-    <% if (messages .error) { %>
-        <h5><%= messages.error %></h5>
-    <% } %>
-
     <div class="row justify-content-md-center" style="margin-top: 100px">
         <div class="col-md-4 card shadow-sm p-3 mb-5 bg-body">
             <form method="POST" action="/room/join">
@@ -15,7 +17,7 @@
                     <label for="room_id" class="mb-md-2">room id</label>
                     <input name="room_id" type="text" class="form-control login" id="room_id" placeholder="Insert your room id">
                 </div>
-                <button type="submit" class="btn btn-warning mt-md-4 px-md-4">Start Game</button>
+                <button type="submit" class="btn btn-warning mt-md-4 px-md-4">Join Room</button>
             </form>
             <a href="/user-game" class="mt-md-3 mb-md-3 text-decoration-none ">&laquo; Back To Dashbord</a>
         </div>

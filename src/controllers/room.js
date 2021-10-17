@@ -26,7 +26,7 @@ exports.createRoom = (req, res) => {
     room.create({
         room_name: roomName,
         capacity,
-        player1_id: req.user.dataValues.id,
+        // player1_id: req.user.dataValues.id,
         uniq_code: uniqCode
     })
     .then(room => {
@@ -58,33 +58,38 @@ exports.createRoomPostman = (req, res) => {
     })
 }
 
-// exports.getPageInputRoomCode = (req, res) => {
-//     room.findOne({where: { id: req.params.id }})
-//     .then(room => {
-//         if (!room) {
-//             return res.redirect('/user-game/create-room');
-//         }
-//         res.render('input-uniq-code', {
-//             title: "Input Unique Code",
-//             room,
-//             fail: req.flash('fail'),
-//         })
-//     })
-// }
+exports.getPageInputRoomCode = (req, res) => {
+    // room.findOne({where: { id: req.params.id }})
+    // .then(room => {
+    //     if (!room) {
+    //         return res.redirect('/user-game/create-room');
+    //     }
+    //     res.render('input-uniq-code', {
+    //         title: "Input Unique Code",
+    //         room,
+    //         fail: req.flash('fail'),
+    //     })
+    // })
+    res.render('input-uniq-code', {
+        title: "Input Unique Code",
+        room,
+        fail: req.flash('fail'),
+    })
+}
 
-// exports.inputRoomCode = (req, res) => {
-//     room.findOne({where: { playerid: req.params.id }})
-    
-//     .then(room => {
-//         console.log('test', room);
-//         // req.flash('error', "");
-//         if ((room.player1_id === req.user.dataValues.id || room.player2_id === req.user.dataValues.id) && room.id === req.body.room_id) {
-//             res.redirect(`/room/fight/${room.id}`)
-//         }
-
-//         // return res.redirect(`/room/join/${req.params.id}`)
-//     })
-// }
+exports.inputRoomCode = (req, res) => {
+    room.findOne({where: { id: req.body.room_id }})
+    .then(room => {
+        console.log('test', room);
+        // req.flash('error', "");
+        console.log(!room);
+        if (!room) {
+            req.flash('fail', `mohon maaf, room ${req.body.room_id} sudah penuh. Silahkan cari room yang lain`);
+            return res.redirect(`/room/join`);
+        }
+        return res.redirect(`/room/fight/${room.id}`);
+    })
+}
 
 exports.getPageRPS = (req, res) => {
     room.findOne({
@@ -100,8 +105,8 @@ exports.getPageRPS = (req, res) => {
         // if (req.user.dataValues.id !== room.player1_id && req.user.dataValues.id !== room.player2_id) return res.status(400).json({message: 'mohon maaf, room sudah penuh. Silahkan cari room yang lain'})
 
         if (req.user.dataValues.id !== room.player1_id && req.user.dataValues.id !== room.player2_id) {
-            req.flash('fail', "mohon maaf, room sudah penuh. Silahkan cari room yang lain");
-            return res.redirect(`/user-game`);
+            req.flash('fail', `mohon maaf, room ${room.id} sudah penuh. Silahkan cari room yang lain`);
+            return res.redirect('/room/join');
         } 
         return room;
     })
